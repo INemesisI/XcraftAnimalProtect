@@ -1,0 +1,7 @@
+Messages:
+    Attack: '&cYou are not allowed to attack this animal!'
+    Interact: '&cYou are not allowed to interact with this animal!'
+Names:
+    HORSE: 'Horse'
+    OCELOT: 'Cat'
+    WOLF: 'Dog'

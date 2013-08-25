@@ -1,0 +1,19 @@
+name: XcraftAnimalProtect
+version: 1.0
+author: INemesisI
+
+main: de.xcraft.INemesisI.AnimalProtect.XcraftAnimalProtect
+load: POSTWORLD
+
+depend: [XcraftLibrary, WorldGuard]
+
+commands:
+  xcraft:
+    aliases: x
+    
+permissions:
+    XcraftAnimalProtect:
+        children:
+            XcraftAnimalProtect.Attack: false
+            XcraftAnimalProtect.Interact: false
+        default: true
