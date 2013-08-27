@@ -12,6 +12,7 @@ public class ConfigManager extends XcraftConfigManager {
 
 	String attackMessage;
 	String interactMessage;
+	String setOwnerFailMessage;
 	Map<EntityType, String> names;
 
 	public ConfigManager(XcraftAnimalProtect plugin) {
