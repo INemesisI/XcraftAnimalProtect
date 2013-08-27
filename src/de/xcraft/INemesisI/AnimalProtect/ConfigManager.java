@@ -10,10 +10,11 @@ import de.xcraft.INemesisI.Library.Manager.XcraftConfigManager;
 
 public class ConfigManager extends XcraftConfigManager {
 
-	String attackMessage;
-	String interactMessage;
-	String setOwnerFailMessage;
-	Map<EntityType, String> names;
+	public String attackMessage;
+	public String interactMessage;
+	public String setOwnerFailMessage;
+	public String setOwnerSucceedMessage;
+	public Map<EntityType, String> names;
 
 	public ConfigManager(XcraftAnimalProtect plugin) {
 		super(plugin);
@@ -23,6 +24,8 @@ public class ConfigManager extends XcraftConfigManager {
 	public void load() {
 		this.attackMessage = config.getString("Messages.Attack");
 		this.interactMessage = config.getString("Messages.Interact");
+		this.setOwnerFailMessage = config.getString("Messages.SetOwnerFail");
+		this.setOwnerSucceedMessage = config.getString("Messages.setOwnerSucceed");
 		names = new HashMap<EntityType, String>();
 		ConfigurationSection cs = config.getConfigurationSection("Names");
 		for (String key : cs.getKeys(false)) {

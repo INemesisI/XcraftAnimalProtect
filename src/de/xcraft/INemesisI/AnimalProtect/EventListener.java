@@ -3,6 +3,7 @@ package de.xcraft.INemesisI.AnimalProtect;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Animals;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
@@ -63,7 +64,15 @@ public class EventListener extends XcraftEventListener {
 						OfflinePlayer player = plugin.getServer().getOfflinePlayer(item.getItemMeta().getDisplayName().replace("setowner ", ""));
 						if (player == null) {
 							event.setCancelled(true);
-							plugin.getMessenger().sendInfo(event.getPlayer(), configManager.setOwnerFailMessage, true);
+							plugin.getMessenger().sendInfo(event.getPlayer(),
+									configManager.setOwnerFailMessage.replace("%", item.getItemMeta().getDisplayName().replace("setowner ", "")),
+									true);
+						} else {
+							tameable.setOwner(player);
+							String name = player.getName() + "'s " + configManager.names.get(event.getRightClicked().getType());
+							((LivingEntity) event.getRightClicked()).setCustomName(name);
+							plugin.getMessenger().sendInfo(event.getPlayer(), configManager.setOwnerSucceedMessage.replace("%", player.getName()),
+									true);
 						}
 					}
 				}
