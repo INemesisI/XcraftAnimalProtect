@@ -11,6 +11,17 @@ import de.xcraft.INemesisI.Library.Manager.XcraftCommandManager;
 import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 import de.xcraft.INemesisI.Library.Message.Messenger;
 
+//@formatter:off
+/***
+* @author INemesisI
+*     by _____   __                         _      ____
+*       /  _/ | / /__  ____ ___  ___  _____(_)____/  _/ 
+*       / //  |/ / _ \/ __ `__ \/ _ \/ ___/ / ___// /  
+*     _/ // /|  /  __/ / / / / /  __(__  ) (__  )/ /   
+*    /___/_/ |_/\___/_/ /_/ /_/\___/____/_/____/___/                                              
+*/ 
+//@formatter:on
+
 public class XcraftAnimalProtect extends XcraftPlugin {
 
 	private ConfigManager configManager = null;
@@ -25,9 +36,9 @@ public class XcraftAnimalProtect extends XcraftPlugin {
 	protected void setup() {
 		messenger = Messenger.getInstance(this);
 		configManager = new ConfigManager(this);
-		eventListener = new EventListener(this);
 		setupWorldguard();
-
+		eventListener = new EventListener(this);
+		configManager.load();
 	}
 
 	@Override
@@ -57,12 +68,11 @@ public class XcraftAnimalProtect extends XcraftPlugin {
 
 	private boolean setupWorldguard() {
 		Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
-
 		// WorldGuard may not be loaded
 		if (plugin == null || !(plugin instanceof WorldGuardPlugin))
 			return false; // Maybe you want throw an exception instead
 		worldguard = (WorldGuardPlugin) plugin;
-		return worldguard != null;
+		return true;
 	}
 
 }

@@ -1,9 +1,9 @@
 Messages:
-    Attack: '&cYou are not allowed to attack this animal!'
-    Interact: '&cYou are not allowed to interact with this animal!'
-    SetOwnerFail: '&cA Player with the name % does not exist! You cant give him that Animal!'
-    setOwnerSucceed:  '&aSuccessfully gave the animal to %'
+  Attack: '&cYou are not allowed to attack this animal!'
+  Interact: '&cYou are not allowed to interact with this animal!'
+  SetOwnerFail: '&cA Player with the name % does not exist! You cant give him that Animal!'
+  setOwnerSucceed:  '&aSuccessfully gave the animal to %'
 Names:
-    HORSE: 'Horse'
-    OCELOT: 'Cat'
-    WOLF: 'Dog'
+  HORSE: 'Horse'
+  OCELOT: 'Cat'
+  WOLF: 'Dog'

@@ -1,17 +1,15 @@
 package de.xcraft.INemesisI.AnimalProtect;
 
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerUnleashEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
@@ -29,9 +27,21 @@ public class EventListener extends XcraftEventListener {
 
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-		if (event.isCancelled() || !(event.getDamager() instanceof Player))
+		if (event.isCancelled())
 			return;
-		Player player = (Player) event.getDamager();
+		LivingEntity livingEntity = null;
+		if (event.getDamager() instanceof Projectile) {
+			Projectile arrow = (Projectile) event.getDamager();
+			livingEntity = arrow.getShooter();
+		} else if (!(event.getDamager() instanceof Player))
+			return;
+		Player player = null;
+		if (event.getDamager() instanceof Player)
+			player = (Player) event.getDamager();
+		else if (livingEntity != null && livingEntity instanceof Player)
+			player = (Player) livingEntity;
+		else
+			return;
 		if (event.getEntity() instanceof Tameable) {
 			Tameable tameable = (Tameable) event.getEntity();
 			if (tameable.isTamed() && tameable.isTamed() && !tameable.getOwner().equals(player)
@@ -58,24 +68,6 @@ public class EventListener extends XcraftEventListener {
 					event.setCancelled(true);
 					plugin.getMessenger().sendInfo(event.getPlayer(), configManager.interactMessage, true);
 				}
-				if (tameable.getOwner().equals(event.getPlayer()) && event.getPlayer().getItemInHand().getType().equals(Material.NAME_TAG)) {
-					ItemStack item = event.getPlayer().getItemInHand();
-					if (item.getItemMeta().getDisplayName().startsWith("setowner ")) {
-						OfflinePlayer player = plugin.getServer().getOfflinePlayer(item.getItemMeta().getDisplayName().replace("setowner ", ""));
-						if (player == null) {
-							event.setCancelled(true);
-							plugin.getMessenger().sendInfo(event.getPlayer(),
-									configManager.setOwnerFailMessage.replace("%", item.getItemMeta().getDisplayName().replace("setowner ", "")),
-									true);
-						} else {
-							tameable.setOwner(player);
-							String name = player.getName() + "'s " + configManager.names.get(event.getRightClicked().getType());
-							((LivingEntity) event.getRightClicked()).setCustomName(name);
-							plugin.getMessenger().sendInfo(event.getPlayer(), configManager.setOwnerSucceedMessage.replace("%", player.getName()),
-									true);
-						}
-					}
-				}
 			}
 		} else if (event.getRightClicked() instanceof Animals) {
 			if (!worldguard.canBuild(event.getPlayer(), event.getRightClicked().getLocation())
@@ -88,7 +80,11 @@ public class EventListener extends XcraftEventListener {
 
 	@EventHandler
 	public void onEntityTame(EntityTameEvent event) {
-		String name = event.getOwner().getName() + "'s " + configManager.names.get(event.getEntityType());
+		String name = event.getOwner().getName() + "'s ";
+		if (configManager.names.containsKey(event.getEntity().getType()))
+			name += configManager.names.get(event.getEntity().getType());
+		else
+			name += event.getEntity().getType().getName();
 		event.getEntity().setCustomName(name);
 		event.getEntity().setCustomNameVisible(true);
 	}
