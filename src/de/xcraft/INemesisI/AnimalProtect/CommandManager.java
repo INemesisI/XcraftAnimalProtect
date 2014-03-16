@@ -10,7 +10,9 @@ public class CommandManager extends XcraftCommandManager {
 
 	@Override
 	protected void registerCommands() {
-		// TODO Auto-generated method stub
+		// registerCommand(new setOwnerCommand(this, "animal", "give", "g.*", "<Player>",
+		// "Gives the animal, you are sitting on permanently to a player",
+		// "XcraftAnimalProtect.Give"));
 
 	}
 

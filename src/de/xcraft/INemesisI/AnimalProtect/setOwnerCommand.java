@@ -7,15 +7,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 
 import de.xcraft.INemesisI.Library.Command.XcraftCommand;
+import de.xcraft.INemesisI.Library.Manager.XcraftCommandManager;
 import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class setOwnerCommand extends XcraftCommand {
-	XcraftAnimalProtect plugin;
-
-	public setOwnerCommand(XcraftAnimalProtect plugin) {
-		super("animal", "give", "g.*", "<Player>", "Gives the animal, you are sitting on permanently to a player", "XcraftAnimalProtect.Give");
-		this.plugin = plugin;
+	public setOwnerCommand(XcraftCommandManager cManager, String command, String name, String pattern, String usage, String desc, String permission) {
+		super(cManager, command, name, pattern, usage, desc, permission);
 	}
+
+	XcraftAnimalProtect plugin;
 
 	@Override
 	public boolean execute(XcraftPluginManager manager, CommandSender sender, String[] args) {
